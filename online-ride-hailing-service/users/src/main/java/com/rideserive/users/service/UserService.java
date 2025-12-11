@@ -1,19 +1,20 @@
 package com.rideserive.users.service;
 
 import com.rideserive.users.dto.UserDTO;
+import com.rideserive.users.dto.UserRegistrationDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
 
-    List<UserDTO> findAll();
+//    List<UserDTO> findAll();
 
-    UserDTO findById(UUID id);
+//    UserDTO findById(UUID id);
 
-    void save(UserDTO user);
+    void save(UserRegistrationDTO user);
 
-    void update(UserDTO user);
+//    void update(UserDTO user);
 
-    void delete(UUID id);
+//    void delete(UUID id);
 }

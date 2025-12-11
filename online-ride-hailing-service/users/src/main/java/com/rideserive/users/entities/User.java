@@ -1,6 +1,5 @@
 package com.rideserive.users.entities;
 
-import com.rideserive.users.role.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,13 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Table
+@Table(name = "users")
 @Entity
-@SequenceGenerator(
-        name = "user_seq",
-        sequenceName = "user_seq",
-        allocationSize = 1
-)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -23,12 +17,12 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(
-            generator = "user_seq",
-            strategy = GenerationType.SEQUENCE
-    )
-    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id", columnDefinition = "uuid")
     private UUID id;
+
+    @Column(name = "keycloak_id", nullable = false, unique = true, columnDefinition = "uuid")
+    private UUID keycloakId;
 
     @Column(name = "user_first_name")
     private String firstName;
@@ -39,10 +33,12 @@ public class User {
     @Column(name = "user_email")
     private String email;
 
-    @Column(name = "user_password")
-    private String password;
+    @Column(name = "user_phonenumber")
+    private String phoneNumber;
 
-    @Column(name = "user_role")
-    @Enumerated(EnumType.STRING)
-    private Roles role;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Driver driverProfile;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Passenger passengerProfile;
 }
